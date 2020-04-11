@@ -1,0 +1,248 @@
+---
+title: "Nutrient composition and suitability of Meat and Bone meal as soil nutrition"
+description: |
+  This is review document, gathering widespread literatures about the composition of meat and bone meal, as well as analyzing its suitability for soil nutrient improvement.
+author:
+  - Deependra Dhakal:
+      institute:
+        - MSc Scholar, Department of Genetics and Plant Breeding, Agriculture and Forestry University, Chitwan, Nepal
+      correspondence: "yes"
+      email: ddhakal.rookie@gmail.com
+date: "`r Sys.Date()`"
+# output: radix::radix_article
+output: 
+  bookdown::pdf_document2:
+    keep_tex: yes
+    toc: no
+    includes:
+      in_header: header_template.tex
+    pandoc_args: ["--lua-filter=scholarly-metadata.lua", "--lua-filter=multiple-bibliographies.lua", "--lua-filter=author-info-blocks.lua", "--lua-filter=cito.lua"]
+bibliography: bibliography.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(tidy = TRUE, cache = TRUE, 
+                      echo = FALSE, 
+                      tidy.opts = list(width.cutoff=50), 
+                      eval = TRUE, warning = FALSE, message = FALSE,
+                      # fig.show = "hold", 
+                      fig.align = "center", fig.width = 6,
+                      fig.asp = 0.9, out.width = "0.8\\linewidth")
+options(knitr.kable.NA = "", digits = 3, knitr.table.format = "latex")
+options(kableExtra.latex.load_packages = FALSE)
+require(tidyverse)
+require(lme4)
+theme_set(theme_bw())
+```
+
+# Introduction
+
+There are a variety of soil nutrient improvement options available to a today's farmer. Notably, supplemeting their soil with exogenous organic and inorganic fertilizer is possibly the most convenient and widely approved method. Inorganic fertilizers are often critisized for their dose-response behaviors, with reports of nitrate toxicity due to urease fertilizer in experimental [@stephen1962toxic] to field conditions.
+
+On the other hand, organic fetilizers -- obtained from living organisms -- in one or more formulation, might provide a solution to widespread soil health concerns arising due to rampant use of fertilizers of inorganic source.
+
+Meat and bone meal are traditionally a valuable protein and mineral source in diets of animals. Crude protein levels ranged from 31 to 66% (as is) while ash levels ranged from 12 to 40% (as is) in meat and bone meals produced in the United Kingdom [@hendriks2002nutritional].
+
+```{r amino-acids-meat-bone-meal-sample}
+composition_aminoacid_mbm_2002 <- tribble(~"Component type", ~"Component", ~"Mean", ~"SD", ~"CV", 
+        "Essential amino acid", "Arginine", 4.15, 0.42, 10.2, 
+        "Essential amino acid", "Histidine", 1.05, 0.21, 20.0, 
+        "Essential amino acid", "Isoleucine", 1.60, 0.26, 16.5, 
+        "Essential amino acid", "Leucine", 3.53, 0.57, 16.1,
+        "Essential amino acid", "Lysine", 3.04, 0.44, 14.5, 
+        "Essential amino acid", "Methionine", 0.90, 0.19, 21.2, 
+        "Essential amino acid", "Phenylalanine", 1.88, 0.30, 16.0, 
+        "Essential amino acid", "Threonine", 1.95, 0.32, 16.6, 
+        "Essential amino acid", "Valine", 2.44, 0.39, 15.8, 
+        "Semi-essential amino acid", "Cysteine", 0.42, 0.12, 29.5, 
+        "Semi-essential amino acid", "Tyrosine", 1.34, 0.25, 18.9, 
+        "Non-essential amino acids", "Alanine", 4.21, 0.32, 7.6, 
+        "Non-essential amino acids", "Aspartic acid", 4.33, 0.58, 13.3, 
+        "Non-essential amino acids", "Glutamic acid", 6.82, 0.78, 11.4, 
+        "Non-essential amino acids", "Glycine", 7.36, 0.64, 8.8, 
+        "Non-essential amino acids", "Proline", 4.66, 0.34, 7.4, 
+        "Non-essential amino acids", "Serine", 2.23, 0.30, 13.2, 
+        "Non-essential amino acids", "Hydroxylysine", 0.35, 0.05, 13.1,
+        "Non-essential amino acids", "Hyrdroxyproline", 2.74, 0.43, 15.6, 
+        "Non-essential amino acids", "Lanthionine", 0.07, 0.06, 88.8, 
+        "Non-essential amino acids", "Amino acid nitrogen", 8.01, 0.69, 8.6, 
+        "Non-essential amino acids", "Sulphur amino acids", 1.32, 0.29, 22.0) 
+
+composition_aminoacid_mbm_2002 %>% 
+  knitr::kable(caption = "Variation in gross amino acid, amino acid nitrogen and sulphur amino acid content of 94 New Zealand meat and bone meal samples (Values expressed as \\% in the dry matter).", booktabs = TRUE, longtable = TRUE) %>% 
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+## Chemical analysis
+
+Dry matter was determined by oven drying for 16 h at $105^\circ C$ while ash was determined by heating samples to 550$^\circ$C for 16 h. Nitrogen and sulphur contents were determined by the Dumas method using a LECO CNS-2000 Carbon, Nitrogen and Sulphur Analyzer. Lipid content was determined using the method of Folch (1957).
+
+### Method of amino acid determination
+
+Amino acids were determined in 5 mg samples by hydrolyzing with 1 ml of 6 M glass-distilled HCl (containing 0.1 g phenol/l) for 24 h at 110$^\circ$C in glass tubes, sealed under vacuum. The tubes were opened and norleucine was added to each tube as an internal standard, and the tubes were then dried under vacuum (Savant Speedvac Concentrator AS 290, Savant Instruments Inc., Farmingdale, NY). Amino acids were dissolved in 2 ml sodium citrate buffer (pH 2.2) and loaded onto a Waters ion-exchange HPLC system (Millipore, Milford, MA) employing postcolumn derivatization with ninhydrin and detection at 570 nm. Proline was detected at 440 nm. The chromatograms were integrated using dedicated software (Millenium, Version 3.05.01, Waters, Milford, MA) with amino acids (including 4-hydroxyproline, hydroxylysine and lanthionine) identified by retention time against a standard amino acid mixture (Sigma, St. Louis, MO). 
+
+Cysteine and methionine were determined following performic acid oxidation of the samples prior to hydrolysis. Samples ($\pm5 mg$) were accurately weighed into 10 ml pyrolyzed glass hydrolysis tubes and 2 ml of freshly prepared performic acid (1 part 30% H2O2 to 8 parts of 88% formic acid) was added. The tubes were kept at $0^\circ C$ for 16 h after which time the reaction was terminated using 0.3 ml of 48% HBr. The hydrolysis tubes were dried under vacuum and the oxidised samples were hydrolyzed and quantitated using the procedure and equipment described previously. Cysteine and methionine were detected as cysteic acid and methionine-sulphone, respectively. Amino acid concentrations were corrected for recoveries of norleucine and converted to a weight basis using molecular weights of free amino acids.
+
+In a thermogravimetric behaviour study of MBM, physically a brownish color mass with a bulk weight of ca. 680 kg/m imparting an intense sweet odor [@conesa2003thermal], elemental compositions were determined at various heating rates and various atmospheric compositions, as indicated in Table \@ref(tab:component-composition-drywt-mbm-thermogravimetric).
+
+```{r component-composition-drywt-mbm-thermogravimetric}
+composition_volatile_and_crude_mbm_2005 <- tribble(~"Component", ~"Compound and element", ~"Concentration", 
+        "Element", "Carbon", 40.4,
+        "Element", "Hydrogen", 6.4,
+        "Element", "Sulphur", 0.5,
+        "Element", "Nitrogen", 7.8,
+        "Element", "Chlorine", 0.8,
+        "Compound", "Ash", 28.7,
+        "Compound", "Moisture", 3.5) 
+composition_volatile_and_crude_mbm_2005 %>% 
+  knitr::kable(booktabs = TRUE, caption = "Mean composition (in percentage dry weight basis) of MBM sample (Chemical analysis done using Carlo Ebra Instrument Model CHNS-0 EA110).", longtable = TRUE) %>% 
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+In yet another study, using low fat sterilized MBM waste of chemical analysis, found crude ash composition upon combustion shown in Table \@ref(tab:crude-ashes-mbm-combustion). While infact, Ashes produced bymeat and bone meal combustion represent up to 30% of theoriginal weight, it is reported that meat and bone meal combustion residues are calcium (30.7%) and phosphate (56.3%) richcompounds, mainly a mixture of Ca10(PO4)6(OH)2 and Ca3(PO4)2. Significant levels of sodium (2.7%), potassium(2.5%) and magnesium (0.8%) are also observed [@deydier2005physical].
+
+The study was focused in tracing out new valorisation ways particular to phosphoric acid produc-tion, phosphate source for industry, agricultural soil enrich-ment, heavy metals immobilisation in soil or water, etc. as developed for other phosphate rich material.
+
+```{r crude-ashes-mbm-combustion}
+composition_ash_mbm_2005 <- tribble(~"Component", ~"Compound and element", ~"Concentration", 
+        "Compound", "Water", 0.28, 
+        "Compound", "Phosphates", 56.33, 
+        "Element", "Calcium", 30.70, 
+        "Element", "Phosphorus", 18.37, 
+        "Element", "Sodium", 2.68, 
+        "Element", "Potassium", 2.48, 
+        "Element", "Sulphur", 1.55, 
+        "Element", "Magnesium", 0.79, 
+        "Element", "Iron", 0.46, 
+        "Element", "Zinc", 0.06, 
+        "Element", "Cupper", 0.02, 
+        "Element", "Aluminium", 0.16, 
+        "Element", "Silicon", 0.01
+        ) 
+
+composition_ash_mbm_2005 %>% 
+  knitr::kable(booktabs = TRUE, caption = "Crude ash composition determined by MBM decomposition. Elements (not compounds), Mg, Fe, Zn, Cu, Al and Si were determined by Inductively Coupled Plasma (ICP).", longtable = TRUE) %>% 
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+It was also identified that calcium hydroxyapatite, Ca10(PO4)6(OH)2 is the major inorganic constituent characteristics of mineral phases of calcifie tissues like bone or teeth.
+
+Field experiments showed varying responses of the crops to applied N as MBM, depending on the N status of the soil and for the yield response when no N was applied. @jeng2004meat found highest yield for the MBM treatment with 2500 kg MBM $ha^{-1}$, and the treatment with 2000 kg MBM $ha^{-1}$ had highest yield at Ostfold and Hedmark in the present study. At the field experiment in Rogaland there was no further yield increase for larger amounts of MBM than 500 kg MBM $ha^{-1}$. 
+
+This result supports findings of @lundstrom2001nitrogen who found very limited yield increase when more than 40 kgN $ha^{-1}$ in MBM (Biofer) was applied. Large supplies of plant-available soil nitrogen, partly present in the soil in spring and partly released by mineralization during the growing season, may influence the crops need of nitrogen released from MBM. Our results showed that the effect of MBM was largest on soils with low content of soil organic matter (SOM) and limited supply of N mineralized from SOM.
+
+Additionally, pot experiments showed that MBM is an effective P fertilizer, as it showed positive effect on readily available P in the soil, and that the P in MBM had residual effect the year after application. The field experiments at Rogaland, Hedmark and Ostfold showed that there was no need for additional P when 500 kg MBM $ha^{-1}$ or more was applied. It was recommended that if MBM is used to meet the N fertilizer demand ofthe crops, P application the following year should be omitted [@jeng2007meat].
+
+In a 2011 study conducted in Finland, @chen2011meat reported nutrient equivalent for 100 kg MBM and secondary nutrient supply (Table \@ref(tab:nitrogen-100-supplemental-mbm)).
+
+```{r nitrogen-100-supplemental-mbm}
+tribble(~"Nitrogen", ~"Phosphorus", ~"Potassium",
+        7.0, 5.02, 1.05) %>%
+  knitr::kable(booktabs = TRUE, caption = "Elemental fertilizer dose equivalents of using 100 kg MBM.", longtable = TRUE) %>% 
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+The study reported following chemical constitution of the MBM used in the experiment (Table \@ref(tab:constitution-mbm-finland)). 
+
+```{r constitution-mbm-finland}
+composition_dry_wt_mbm_2011 <- tribble(~"Component", ~"Compound and element", ~"Concentration", 
+        "Element", "Nitrogen", 7.0, 
+        "Element (water soluble)", "Nitrogen", 2.5, 
+        "Element", "Phosphorus", 5, 
+        "Element (water soluble)", "Phosphorus", 0.15, 
+        "Element", "Potassium", 1, 
+        "Element", "Calcium", 12.0, 
+        "Element", "Magnesium", 0.8, 
+        "Element", "Sulphur", 0.5, 
+        "Element", "Sodium", 0.5, 
+        "Element", "Boron", 25, 
+        "Element", "Cobalt", 0.15, 
+        "Element", "Cupper", 3.9, 
+        "Element", "Iron", 58, 
+        "Element", "Manganese", 4, 
+        "Element", "Zinc", 55, 
+        "Element", "Selenium", 0.19, 
+        "Element", "Lead", 0.50, 
+        "Element", "Cadmium", 0.1, 
+        "Element", "Mercury", 0.01, 
+        "Element", "Nickel", 0.55) 
+
+composition_dry_wt_mbm_2011 %>% 
+  knitr::kable(booktabs = TRUE, caption = "The macronutrient (\\%), micronutrient (mg per kg) and heavy metal (mg per kg) content of MBM.", longtable = TRUE) %>% 
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+Furthermore, the study showed that fertilizer types tested (MBM and PY3) did not give rise to significant yield differences, however there was marked difference in yield for fertilized versus non fertilized scenarios, even when fertilized with lowest dose, equivalent of 60 kg $N ha^{-1}$. But to the contrary, the plots fertilised by MBM in the three previous years produced, on an average, 381 kg ha-1 (20 %) more than the plots fertilised by PY3. 
+
+An in-vitro feed quality test by Department of Animal Sciences, University of Illinois, Urbana tested for the protein quality of MBM was performed [@parsons1997protein]. All  samples were analyzed for DM, gross energy, CP (N x 6.25), etherextract, ash, Ca, and P according to the procedures of the Association of Official Analytical Chemists (AOAC, 1980). Amino  acids  were analyzed by ion-exchange chromatography [@moore1963117] following hydrolysis of samples in 6N HCl under N for 24h at 110 C. Analyses of Met and Cys were performed separately after performic oxidation by the method of @moore1963determination, with the exception that the excess performic acid was removed by lyophilization after dilution with water. The consitution of MBM determined by above mentioned methods is showin in Table \@ref(tab:crude-compounds-mbm) and \@ref(tab:amino-acids-mbm).
+
+```{r crude-compounds-mbm}
+composition_crude_compounds_1997 <- read_csv("./data/chicken_assay_mba_1997_crudecompounds.csv") 
+
+composition_crude_compounds_1997 %>% 
+  knitr::kable(booktabs = TRUE, caption = "General nutrient composition of meat and bone meals (MBM) (Values are expressed as percentage, are means of replicates on ratios expressed on air-dry basis).", longtable = TRUE) %>% 
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+
+```{r amino-acids-mbm}
+composition_aminoacids_1997 <- read_csv("./data/chicken_assay_mba_1997_aminoacids.csv")
+  
+composition_aminoacids_1997 %>% 
+  knitr::kable(booktabs = TRUE, caption = "Amino acid composition of meat and bone meals (Values are expressed as percentage, are means of replicates on ratios expressed on air-dry basis).", longtable = TRUE) %>% 
+  kableExtra::kable_styling(latex_options = "hold_position")
+```
+
+
+<!-- ```{r composition-aggregate} -->
+<!-- # methods -->
+<!-- composition_aminoacids_1997 <- composition_aminoacids_1997 %>%  -->
+<!--   rename(Agrinine = Arg,  -->
+<!--          Cysteine = Cys,  -->
+<!--          Histidine = His,  -->
+<!--          Isoleucine = Ile,  -->
+<!--          Leucine = Leu,  -->
+<!--          Lysine = Lys,  -->
+<!--          Methionine = Met,  -->
+<!--          Phenylalanine = Phe,  -->
+<!--          Threonine = Thr,  -->
+<!--          Valine = Val) %>%  -->
+<!--   pivot_longer(cols = 2:ncol(.), names_to = "Component", values_to = "Mean") -->
+<!-- lme4::lmer(formula = Mean ~ (1 | `MBM sample`) + Component, data = composition_aminoacids_1997) %>%  -->
+<!--   emmeans::emmeans(specs = "Component") %>%  -->
+<!--   as_tibble() %>%  -->
+<!--   ggplot(aes(x = Component, y = emmean)) + -->
+<!--   geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL)) + -->
+<!--   theme_bw() + -->
+<!--   labs(x = "Mean", y = "Amino acid fraction") + -->
+<!--   theme(axis.text.x = element_text(angle = 60)) -->
+
+<!-- composition_aminoacid_mbm_2002 <- composition_aminoacid_mbm_2002 %>%  -->
+<!--   mutate(upper_conf = Mean+SD/sqrt(22)*1.96, lower_conf = Mean-SD/sqrt(22)*1.96) -->
+
+<!-- composition_aminoacid_mbm_2002 %>%  -->
+<!--   ggplot(aes(x = Component, y = Mean)) + -->
+<!--   geom_errorbar(data = composition_aminoacid_mbm_2002,  -->
+<!--                 aes(ymin = lower_conf, ymax = upper_conf)) + -->
+<!--     theme_bw() + -->
+<!--   labs(x = "Mean", y = "Amino acid fraction") + -->
+<!--   theme(axis.text.x = element_text(angle = 60)) -->
+
+<!-- composition_dry_wt_mbm_1 <- composition_dry_wt_mbm_2011 %>%  -->
+<!--   semi_join(composition_ash_mbm_2005, by = c("Component", "Compound and element")) -->
+<!-- composition_dry_wt_mbm_2 <- composition_ash_mbm_2005 %>%  -->
+<!--   semi_join(composition_dry_wt_mbm_2011, by = c("Component", "Compound and element")) -->
+
+<!-- map_dfr(list(composition_dry_wt_mbm_1, composition_dry_wt_mbm_2),  -->
+<!--         c,.id = "name") -->
+
+<!-- composition_volatile_and_crude_mbm_2005 -->
+<!-- ``` -->
+
+# Conclusion
+
+In summary, analytical techniques reviewed in this article indicate an average Nitrogen content of bovine meat and bone meal situating around 7-8 % on dry weight basis. Likewise, phosphorus and potassium contents lie around 3.5-4.5 % and 1-1.5 %, respectively. Suitability of meal as soil supplment is further enhanced with the presence of large amount of calcium (aroud 3 times that of phosphorus).
+
+With respect soil nutrient enrichment from the MBM fertilizer, field crop studies suggest that effects of the biofertilizer is pronounced in long term, rather than short term. This is probably due to presence of the hydroxylapatite, which is in a broad sense a stable compound against soil chemical reactions, and apparent low dissolution [@shashvatt2017evaluation]. Moreover, its property to bind chlorine and fluoride might prevent toxicty of these elements from building up.
+
+# Bibliography
